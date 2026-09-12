@@ -16,7 +16,7 @@ enemies = []
 
 #create the ship
 ship = Actor('ship.png')
-ship.pos = (CENTER_X , CENTER_Y - 60)
+ship.pos = (CENTER_X , HEIGHT - 60)
 
 #create the enemies
 for i in range(8):
@@ -60,7 +60,7 @@ def update():
             ship.x = 0
     elif keyboard.right:
         ship.x += speed
-        if ship >= WIDTH:
+        if ship.x >= WIDTH:
             ship.x = WIDTH
     #move the bullets
     for bullet in bullets:
@@ -105,7 +105,23 @@ def game_over():
 def game_over_screen():
     screen.clear()
     screen.fill('#D90429')
-    screen.draw.text(f'Game Over!!!',(CENTER_X - 150, CENTER_Y))
+    screen.draw.text(f'Game Over!!!',(CENTER_X - 150, CENTER_Y),fontsize = 60,color = 'white')
+    screen.draw.text(f'Score : {score}',(CENTER_X - 150, CENTER_Y + 50), fontsize = 40, color = 'white')
+    screen.draw.text(f'Press space to restart.',(CENTER_X - 150, CENTER_Y + 100),fontsize = 40, color = 'white')
+    if keyboard.SPACE:
+        restart_game()
+
+def restart_game():
+    global lives, score, enemies, bullets
+    score = 0
+    lives = 3
+    enemies = []
+    bullets = []
+    for i in range(8):
+        enemy = Actor('bug.png')
+        enemy.x = random.randint(0,WIDTH - 80)
+        enemy.y = random.randint(-100, 0)
+        enemies.append(enemy)
 
 
 pgzrun.go()
